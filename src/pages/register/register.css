@@ -12,12 +12,26 @@
     box-shadow: 0px 0px 5px 0px #aaaaaa;
 }
 
+.register-button:hover {
+    background-color: #c51708;
+    color: #ffffff;
+    /* I want a scale up with ease and out  */
+    transition: transform 0.1s ease-out;
+    transform: scale(1.030);
+}
+
+.register-button[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
 .register-text-field {
     border-radius: 30px;
     background-color: #F5F5F5;
     padding-inline: 15px;
     padding-block: 15px;
-    color: white;
+    color: #000000;
+    font-weight: 600;
 }
 
 .register-text-field::placeholder {
