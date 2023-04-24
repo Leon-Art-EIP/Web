@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './register.css';
-
+import Gallery from '../../components/gallery/gallery'
 
 function Register() {
 
@@ -64,12 +64,12 @@ function Register() {
           />
           <label className='text-sm font-normal w-11/12 text-center'>En vous enregistrant, vous acceptez les <a className='font-semibold'>Conditions d'utilisations</a> et <a className='font-semibold'>notre Politique de confidentialité</a></label>
           <button type="submit" className='register-button mt-10' disabled={onRegister}>S'inscrire</button>
-          <label className='flex justify-center font-normal'>Vous avez déjà un compte ? <a className='ms-1 font-extrabold'>Connexion</a></label>
+          <label className='flex justify-center font-normal'>Vous avez déjà un compte ? <a className='ms-1 font-extrabold'>Se connecter</a></label>
         </form>
       </div>
       <div className="w-2/3 p-4">
         {/* Importation de votre composant */}
-        <h1> Helloworld </h1>
+        <Gallery></Gallery>
       </div>
     </div>
   );
