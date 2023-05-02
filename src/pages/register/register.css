@@ -1,3 +1,8 @@
+a {
+    color: #E11C0A;
+    cursor: pointer;
+}
+
 .left-side {
     box-shadow: 10px 0px 13px -7px #aaaaaa, 0px 0px 5px 0px #aaaaaa;
     gap: 3rem;
@@ -28,7 +33,7 @@
 .register-text-field {
     border-radius: 30px;
     background-color: #F5F5F5;
-    padding-inline: 15px;
+    padding-inline: 35px;
     padding-block: 15px;
     color: #000000;
     font-weight: 600;
@@ -36,10 +41,8 @@
 
 .register-text-field::placeholder {
     color: #676666;
-    padding-left: 10px;
 }
 
-a {
-    color: #E11C0A;
-    cursor: pointer;
+.right-side {
+    margin-left: 33.33%;
 }

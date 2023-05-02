@@ -34,8 +34,8 @@ function Register() {
   }
 
   return (
-    <div className="flex min-h-screen">
-      <div className="left-side w-1/3 flex flex-col items-center justify-center">
+    <div className="flex h-screen">
+      <div className="left-side h-screen w-1/3 flex flex-col items-center justify-center fixed">
         <label className='text-5xl font-extrabold'> S'enregistrer</label>
         <form className="flex flex-col gap-8 w-4/6" onSubmit={handleSubmit}>
           <input
@@ -67,8 +67,7 @@ function Register() {
           <label className='flex justify-center font-normal'>Vous avez déjà un compte ? <a className='ms-1 font-extrabold'>Se connecter</a></label>
         </form>
       </div>
-      <div className="w-2/3 p-4">
-        {/* Importation de votre composant */}
+      <div className="right-side w-2/3 p-4">
         <Gallery></Gallery>
       </div>
     </div>
