@@ -47,12 +47,12 @@ function Gallery() {
         <label className='text-4xl font-bold'>Support</label>
         <label className='text-4xl font-bold'>Couleurs</label>
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center pb-10'>
         <div className='grid grid-cols-4 gap-8 place-items-center justify-center mt-8 mx-4'>
           {pictures.map((url, index) => (
             <div
               key={index}
-              className="w-55 h-55 rounded-xl overflow-hidden"
+              className="w-55 h-55 rounded-xl overflow-hidden bg-slate-300"
             >
               <img src={url} alt="" className="w-full h-full object-cover" />
             </div>

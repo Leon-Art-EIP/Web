@@ -8,19 +8,23 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const [onRegister, setOnRegister] = useState(false);
+  const [disableRegister, setDisableRegister] = useState(false);
+
+  const [error, setError] = useState("");
 
   function validateForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour vérifier l'adresse email
   
-    if (!username || !email || !password) { // Vérifier si les champs sont remplis
-      alert('Veuillez remplir tous les champs');
+    if (!username || !email || !password) {
+      setError("Veuillez remplir tous les champs.");
+      setDisableRegister(true);
       return false;
-    } else if (!emailRegex.test(email)) { // Vérifier si l'adresse email est valide
-      alert('Veuillez entrer une adresse email valide');
+    } else if (!emailRegex.test(email)) {
+      setError("Veuillez entrer une adresse email valide.");
+      setDisableRegister(true);
       return false;
     }
-  
+    setDisableRegister(false);
     return true;
   }
 
@@ -63,7 +67,10 @@ function Register() {
             onChange={(event) => setPassword(event.target.value)}
           />
           <label className='text-sm font-normal w-11/12 text-center'>En vous enregistrant, vous acceptez les <a className='font-semibold'>Conditions d'utilisations</a> et <a className='font-semibold'>notre Politique de confidentialité</a></label>
-          <button type="submit" className='register-button mt-10' disabled={onRegister}>S'inscrire</button>
+          <div className='relative flex justify-center'>
+            {error && <label className='absolute top-2 text-sm font-normal text-red-500'>{error}</label>}
+            <button type="submit" className='register-button mt-10' disabled={disableRegister}>S'inscrire</button>
+          </div>
           <label className='flex justify-center font-normal'>Vous avez déjà un compte ? <a className='ms-1 font-extrabold'>Se connecter</a></label>
         </form>
       </div>
