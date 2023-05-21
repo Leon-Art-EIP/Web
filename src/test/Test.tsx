@@ -7,7 +7,7 @@ export default function Test(props: ITestProps) {
 
   return (
     <div className="text-3xl font-bold underline">
-      résultat : <span className="text-red-500">{display}</span>
+      résultat : <span className="text-primaryBlack">{display}</span>
     </div>
   )
 }
