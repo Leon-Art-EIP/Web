@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import './register.css';
 import Gallery from '../../components/gallery/gallery'
 
-function Register() {
+interface IBaseFormValues {
+  username: string;
+  email: string;
+  password: string;
+}
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+function Register() {
   const [disableRegister, setDisableRegister] = useState(false);
 
   const [error, setError] = useState("");
 
-  function validateForm() {
+  function validateForm({ username, email, password }: IBaseFormValues) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour vérifier l'adresse email
   
     if (!username || !email || !password) {
@@ -28,10 +29,14 @@ function Register() {
     return true;
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Logique de traitement du formulaire
-    if (validateForm()) {
+    if (validateForm({
+      username: event.currentTarget.username.value,
+      email: event.currentTarget.email.value,
+      password: event.currentTarget.password.value,
+    })) {
       // Logique de traitement du formulaire si la validation est réussie
       console.log('Formulaire soumis');
     }
@@ -47,24 +52,18 @@ function Register() {
             name="username"
             className="register-text-field"
             placeholder="Nom d'utilisateur"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
           />
           <input
             type="email"
             name="email"
             className="register-text-field"
             placeholder="Adresse email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
           />
           <input
             type="password"
             name="password"
             className="register-text-field"
             placeholder="Mot de passe"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
           />
           <label className='text-sm font-normal w-11/12 text-center'>En vous enregistrant, vous acceptez les <a className='font-semibold'>Conditions d'utilisations</a> et <a className='font-semibold'>notre Politique de confidentialité</a></label>
           <div className='relative flex justify-center'>
