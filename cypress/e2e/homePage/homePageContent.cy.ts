@@ -4,7 +4,7 @@ import { find } from "../find";
 describe("homePageContent.cy.ts", () => {
   it("should test homePage", () => {
     start();
-    find("Edit src/App.tsx and save to reload.");
-    find("Learn React");
+    find("You're using Next.js");
+    find("Register page");
   });
 });

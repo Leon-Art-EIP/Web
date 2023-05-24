@@ -60,7 +60,7 @@ function Register() {
           </label>
           <div className="relative flex justify-center">
             {error && <label className="absolute top-2 text-sm font-normal text-red-500">{error}</label>}
-            <button type="submit" className="register-button mt-10" disabled={disableRegister}>
+            <button type="submit" className="register-button mt-10" disabled={disableRegister} name="register">
               S'inscrire
             </button>
           </div>
