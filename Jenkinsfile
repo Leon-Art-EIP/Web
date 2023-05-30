@@ -15,7 +15,6 @@ pipeline{
     stage("Install") {
       steps {
         sh "npm install"
-        sh 'npm install lambdatest-cypress-cli'
       }
     }
     stage('Building'){
