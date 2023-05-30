@@ -1,11 +1,7 @@
 pipeline{
   
-  agent {
-        docker {
-          image 'node:14-buster'
-        }
-      }
- 
+  agent any
+  
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/integration/**/**", description: "Enter the script path that you want to execute")
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Choice the browser where you want to execute your tests")
