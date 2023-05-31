@@ -1,4 +1,6 @@
+import Header from "../components/header";
 import "./globals.css";
+import tabs from "./tabs";
 
 export const metadata = {
   title: "Next.js",
@@ -7,8 +9,13 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="fr">
+      <body>
+        <div className="flex flex-col">
+          <Header tabs={tabs} />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

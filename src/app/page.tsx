@@ -8,10 +8,7 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      <h1>You're using Next.js</h1>
-      <a href="/register" className="underline text-blue-400">
-        Register page
-      </a>
+      <h1>Application réalisée avec Next.js</h1>
       <Test r={result} />
     </>
   );
