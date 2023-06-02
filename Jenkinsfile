@@ -16,6 +16,16 @@ pipeline{
     stage("Install") {
       steps {
         sh "npm install"
+        sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
+        sh 'sudo apt-get update'
+        sh 'sudo apt-get install -y google-chrome-stable'
+      }
+    }
+    stage('Starting Server'){
+      steps{
+        echo "Starting Server..."
+        // Replace this with the command to start your server
+        sh 'npm start'
       }
     }
     stage('Building'){
@@ -25,7 +35,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh "npx cypress run --headless --browser ${BROWSER} --spec ${SPEC}"
+        sh "npx cypress run --headless --browser ${BROWSER} --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
       }
     }
   }
