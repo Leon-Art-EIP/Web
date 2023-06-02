@@ -2,6 +2,7 @@ pipeline{
   
   agent any
   
+  tools {nodejs "NodeJS"}
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/integration/**/**", description: "Enter the script path that you want to execute")
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Choice the browser where you want to execute your tests")
@@ -14,7 +15,6 @@ pipeline{
   stages{
     stage("Install") {
       steps {
-        sh "node -v"
         sh "npm install"
       }
     }
@@ -25,7 +25,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC} --headless"
+        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
       }
     }
   }
