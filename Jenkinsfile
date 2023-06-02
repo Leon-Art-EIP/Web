@@ -2,6 +2,11 @@ pipeline{
   
   agent any
   
+  triggers { 
+        githubPush() 
+        githubPullRequest() 
+    }
+  
   tools {nodejs "NodeJS"}
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/integration/**/**", description: "Enter the script path that you want to execute")
