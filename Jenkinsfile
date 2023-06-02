@@ -2,10 +2,7 @@ pipeline{
   
   agent any
   
-  triggers { 
-        githubPush() 
-        githubPullRequest() 
-  }
+  triggers { githubPush() }
   
   tools {nodejs "NodeJS"}
   parameters{
