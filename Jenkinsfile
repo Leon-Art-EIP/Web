@@ -18,6 +18,9 @@ pipeline{
         sh "npm install"
         sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
         sh 'sudo apt-get update'
+        sh 'wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -'
+        sh 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list'
+        sh 'sudo apt-get update'
         sh 'sudo apt-get install -y google-chrome-stable'
       }
     }
