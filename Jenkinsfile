@@ -14,6 +14,7 @@ pipeline{
   stages{
     stage("Install") {
       steps {
+        sh "node -v"
         sh "npm install"
       }
     }
@@ -24,8 +25,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh "npm i"
-        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}}"
+        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC} --headless"
       }
     }
   }
