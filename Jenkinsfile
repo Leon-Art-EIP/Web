@@ -5,7 +5,7 @@ pipeline{
   triggers { 
         githubPush() 
         githubPullRequest() 
-    }
+  }
   
   tools {nodejs "NodeJS"}
   parameters{
