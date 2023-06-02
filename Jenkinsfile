@@ -27,8 +27,7 @@ pipeline{
     stage('Starting Server'){
       steps{
         echo "Starting Server..."
-        // Replace this with the command to start your server
-        sh 'npm start'
+        sh 'nohup npm start &'
       }
     }
     stage('Building'){
