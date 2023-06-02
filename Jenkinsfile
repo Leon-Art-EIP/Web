@@ -25,7 +25,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+        sh "npx cypress run --headless --browser ${BROWSER} --spec ${SPEC}"
       }
     }
   }
