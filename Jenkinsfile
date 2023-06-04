@@ -15,9 +15,10 @@ pipeline{
   }
   
   stages{
-     when { 
+     stage('Ignore gh-pages') {
+        when { 
             not { 
-                branch 'gh-pages' 
+                branch 'master' 
             }
         }
     stage("Install") {
