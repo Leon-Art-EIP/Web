@@ -35,7 +35,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh "npx cypress run --headless --spec ./cypress/e2e/homePage/homePageContent.cy.ts --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
+        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
       }
     }
   }
