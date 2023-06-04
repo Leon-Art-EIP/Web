@@ -15,6 +15,11 @@ pipeline{
   }
   
   stages{
+     when { 
+            not { 
+                branch 'gh-pages' 
+            }
+        }
     stage("Install") {
       steps {
         sh "npm install"
