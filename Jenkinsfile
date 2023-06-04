@@ -15,7 +15,8 @@ pipeline{
   }
   
   stages{
-     when { 
+    stage('Build') {
+        when { 
             not { 
                 branch 'gh-pages' 
             }
