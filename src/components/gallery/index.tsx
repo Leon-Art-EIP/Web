@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './gallery.css';
+import './index.css';
 
-function Gallery() {
+function Gallery({ redirectUrl, redirectText }: { redirectUrl: string, redirectText: string }) {
 
   const [pictures, setPictures] = useState<string[]>([]);
 
@@ -57,7 +57,7 @@ function Gallery() {
     <div>
       <div className='flex justify-center'>
         <label className='text-6xl font-extrabold mt-7'><span className='leon-title'>Leon</span><span className='art-title'>'Art</span></label>
-        <button className='absolute mt-9 right-7 connect-button text-xl font-extrabold'>Se connecter</button>
+        <a href={redirectUrl}><button className='absolute mt-9 right-7 redirection-button text-xl font-extrabold'>{redirectText}</button></a>
       </div>
       <div className='flex justify-evenly mt-10'>
         <label className='text-4xl font-bold'>Artistes</label>
