@@ -42,7 +42,7 @@ function Register() {
       })
     ) {
       // Logique de traitement du formulaire si la validation est réussie
-      console.log("Formulaire soumis");
+      console.log("Valid form");
     }
   };
 
