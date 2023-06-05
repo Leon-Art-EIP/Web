@@ -42,7 +42,7 @@ function Register() {
       })
     ) {
       // Logique de traitement du formulaire si la validation est réussie
-      console.log("Formulaire soumis");
+      console.log("Valid form");
     }
   };
 
@@ -65,7 +65,7 @@ function Register() {
             </button>
           </div>
           <label className="flex justify-center font-normal">
-            Vous avez déjà un compte ? <a className="ms-1 font-extrabold">Se connecter</a>
+            Vous avez déjà un compte ? <a className="ms-1 font-extrabold" title="connect">Se connecter</a>
           </label>
         </form>
       </div>
