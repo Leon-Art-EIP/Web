@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './register.css';
+import './SignupPage.css';
 import Gallery from '../../components/gallery/gallery'
 
 interface IBaseFormValues {
