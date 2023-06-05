@@ -14,32 +14,9 @@ pipeline{
   }
   
   stages{
-    stage('Build') {
-      steps {
-        echo "Build step is empty."
-      }
-    }
     stage("Install") {
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
       steps {
         sh "npm install"
-        sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
-        sh 'sudo apt-get update'
-      }
-    }
-    stage('Starting Server'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        echo "Starting Server..."
-        sh 'nohup npm start &'
       }
     }
     stage('Building'){
@@ -59,7 +36,8 @@ pipeline{
             }
         }
       steps{
-        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
+        sh "npm i"
+        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}}"
       }
     }
   }
