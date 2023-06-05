@@ -8,7 +8,11 @@ a {
     gap: 3rem;
 }
 
-.register-button {
+.welcome-back {
+    padding-bottom: 5vh;
+}
+
+.login-button {
     background-color: #E11C0A;
     color: #ffffff;
     padding-inline: 100px;
@@ -17,20 +21,19 @@ a {
     box-shadow: 0px 0px 5px 0px #aaaaaa;
 }
 
-.register-button:hover {
+.login-button:hover {
     background-color: #c51708;
     color: #ffffff;
-    /* I want a scale up with ease and out  */
     transition: transform 0.1s ease-out;
     transform: scale(1.030);
 }
 
-.register-button[disabled] {
+.login-button[disabled] {
     background-color: #cccccc;
     cursor: not-allowed;
 }
 
-.register-text-field {
+.login-text-field {
     border-radius: 30px;
     background-color: #F5F5F5;
     padding-inline: 35px;
@@ -39,7 +42,7 @@ a {
     font-weight: 600;
 }
 
-.register-text-field::placeholder {
+.login-text-field::placeholder {
     color: #676666;
 }
 

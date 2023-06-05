@@ -6,7 +6,7 @@
     color: #000000
 }
 
-.connect-button {
+.redirection-button {
     border-radius: 30px;
     box-shadow: #F5F5F5 0px 0px 5px 0px;
     padding-inline: 15px;
@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 
-.connect-button:hover {
+.redirection-button:hover {
     background-color: #fcfcfc;
     transition: transform 0.1s ease-out;
     transform: scale(1.030);

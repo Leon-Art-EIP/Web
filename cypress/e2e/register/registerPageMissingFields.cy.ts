@@ -48,7 +48,7 @@ describe('registerPageMissingFields.cy.ts', () => {
     cy.get('input[name="email"]').type('invalidemail@ezaeaz');
     cy.get('input[name="password"]').type('password123');
     cy.get('button[name="register"]').click().then(() => {
-      find('Veuillez entrer une adresse email valide.');
+      find('Adresse email invalide.');
     });
   });
 });
