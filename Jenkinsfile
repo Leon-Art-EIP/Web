@@ -3,7 +3,6 @@ pipeline{
   agent any
   
   triggers { githubPush() }
-  
   tools {nodejs "NodeJS"}
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the script path that you want to execute")
@@ -14,9 +13,32 @@ pipeline{
   }
   
   stages{
+    stage('Build') {
+      steps {
+        echo "Build step is empty."
+      }
+    }
     stage("Install") {
+        when { 
+            not { 
+                branch 'gh-pages' 
+            }
+        }
       steps {
         sh "npm install"
+        sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
+        sh 'sudo apt-get update'
+      }
+    }
+    stage('Starting Server'){
+        when { 
+            not { 
+                branch 'gh-pages' 
+            }
+        }
+      steps{
+        echo "Starting Server..."
+        sh 'nohup npm start &'
       }
     }
     stage('Building'){
@@ -36,8 +58,7 @@ pipeline{
             }
         }
       steps{
-        sh "npm i"
-        sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}}"
+        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
       }
     }
   }
