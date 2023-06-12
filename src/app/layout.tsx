@@ -14,7 +14,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="flex flex-col">
           <Header tabs={tabs} />
-          <Providers children={children} tabs={tabs} />
+          {/* <Providers children={children} tabs={tabs} /> */}
+          {children}
         </div>
       </body>
     </html>
