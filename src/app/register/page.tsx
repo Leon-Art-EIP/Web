@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import "./page.css";
 import Gallery from "../../components/gallery";
+import { IError, ISuccess } from "../../interfaces";
+import { useSetRecoilState } from "recoil";
+import { isLoggedIn } from "../../recoil/SetupRecoil";
 
 interface IBaseFormValues {
   username: string;
@@ -12,6 +15,7 @@ interface IBaseFormValues {
 
 export default function Page(): JSX.Element {
   const [disableRegister, setDisableRegister] = useState(false);
+  const setLoggedIn = useSetRecoilState(isLoggedIn);
 
   const [error, setError] = useState("");
 
@@ -36,7 +40,7 @@ export default function Page(): JSX.Element {
     setDisableRegister(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
       validateForm({
@@ -46,6 +50,25 @@ export default function Page(): JSX.Element {
       })
     ) {
       console.log("Valid form");
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: event.currentTarget.email.value,
+          email: event.currentTarget.email.value,
+          password: event.currentTarget.password.value,
+        }),
+      });
+      const data = (await response.json()) as ISuccess | IError;
+      if ("token" in data) {
+        const token = data.token;
+        console.log("token", token);
+        setLoggedIn(true);
+      } else {
+        setError("Erreur lors de la connexion.");
+      }
     }
   };
 
@@ -54,21 +77,21 @@ export default function Page(): JSX.Element {
       <div className="left-side h-screen w-1/3 flex flex-col items-center justify-center fixed">
         <label className="text-5xl font-extrabold"> S'enregistrer</label>
         <form className="flex flex-col gap-8 w-4/6" onSubmit={handleSubmit}>
-        <input 
+          <input
             type="text"
             name="username"
             className="register-text-field"
             placeholder="Nom d'utilisateur"
             onChange={handleInputChange}
           />
-          <input 
+          <input
             type="email"
             name="email"
             className="register-text-field"
             placeholder="Adresse email"
             onChange={handleInputChange}
           />
-          <input 
+          <input
             type="password"
             name="password"
             className="register-text-field"
@@ -86,7 +109,10 @@ export default function Page(): JSX.Element {
             </button>
           </div>
           <label className="flex justify-center font-normal">
-            Vous avez déjà un compte ? <a className="ms-1 font-extrabold" title="login" href="/login">Se connecter</a>
+            Vous avez déjà un compte ?{" "}
+            <a className="ms-1 font-extrabold" title="login" href="/login">
+              Se connecter
+            </a>
           </label>
         </form>
       </div>
