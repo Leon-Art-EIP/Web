@@ -12,6 +12,11 @@ const tabs: ITab[] = [
     loggedIn: false,
   },
   {
+    name: "Accueil",
+    href: "/",
+    loggedIn: true,
+  },
+  {
     name: "Messages",
     href: "/messages",
     loggedIn: true,

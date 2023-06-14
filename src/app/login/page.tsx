@@ -1,11 +1,12 @@
 "use client";
 
-import Gallery from "../../components/gallery";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import "./page.css";
-import { IError, ISuccess } from "../../interfaces";
 import { useSetRecoilState } from "recoil";
+import Gallery from "../../components/gallery";
+import { IError, ISuccess } from "../../interfaces";
 import { isLoggedIn } from "../../recoil/SetupRecoil";
+import "./page.css";
 
 interface IBaseFormValues {
   email: string;
@@ -15,6 +16,7 @@ interface IBaseFormValues {
 export default function Page(): JSX.Element {
   const [disableLogin, setDisableLogin] = useState(false);
   const setLoggedIn = useSetRecoilState(isLoggedIn);
+  const router = useRouter();
 
   const [error, setError] = useState("");
 
@@ -47,7 +49,6 @@ export default function Page(): JSX.Element {
         password: event.currentTarget.password.value,
       })
     ) {
-      console.log("Valid form");
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
@@ -58,12 +59,13 @@ export default function Page(): JSX.Element {
           password: event.currentTarget.password.value,
         }),
       });
-      console.log("response", response);
       const data = (await response.json()) as ISuccess | IError;
       if ("token" in data) {
         const token = data.token;
         console.log("token", token);
+        localStorage.setItem("token", token);
         setLoggedIn(true);
+        router.push("/");
       } else {
         setError("Erreur lors de la connexion.");
       }

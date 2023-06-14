@@ -6,13 +6,14 @@ export interface ITab {
 
 export type ISuccess = {
   token: string;
-}
+};
 
 export type IError = {
   errors: {
     type: string;
-    message: string;
+    msg: string;
     path: string;
     location: string;
+    value: string;
   }[];
-}
+};

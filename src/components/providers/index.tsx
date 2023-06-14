@@ -1,6 +1,6 @@
 "use client";
 
-import { RecoilRoot, useRecoilValue } from "recoil";
+import { RecoilRoot } from "recoil";
 import Session, { ISessionProps } from "../session";
 
 export default function Providers(props: ISessionProps): JSX.Element {

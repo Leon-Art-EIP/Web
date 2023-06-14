@@ -1,14 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { RecoilState, useSetRecoilState } from "recoil";
 import { ITab } from "../../../src/interfaces";
+import { isLoggedIn } from "../../recoil/SetupRecoil";
 
 interface IHeaderProps {
   tabs: ITab[];
 }
 
 export default function Header(props: IHeaderProps): JSX.Element {
+  const setLoggedIn = useSetRecoilState(isLoggedIn);
+  const router = useRouter();
   const pathname = usePathname();
 
   const displayHeader = pathname === "/" || props.tabs.find((tab) => tab.href === pathname)?.loggedIn;
@@ -24,6 +28,21 @@ export default function Header(props: IHeaderProps): JSX.Element {
           {`->`} {tab.name}
         </Link>
       ))}
+      <button
+        title="Se déconnecter"
+        name="signout"
+        onClick={() => {
+          router.push("/login");
+          localStorage.removeItem("token");
+          setLoggedIn(false);
+        }}
+        className="rounded-lg bg-red-500 text-white p-2 max-w-max"
+      >
+        Se déconnecter
+      </button>
     </div>
   );
+}
+function useRecoilSetState(isLoggedIn: RecoilState<boolean>) {
+  throw new Error("Function not implemented.");
 }
