@@ -22,7 +22,7 @@ export default function Page(): JSX.Element {
 
   function validateForm({ email, password }: IBaseFormValues) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
     if (!email || !password) {
       setError("Veuillez remplir tous les champs.");
       setDisableLogin(true);

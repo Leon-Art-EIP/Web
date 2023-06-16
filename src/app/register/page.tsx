@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
+import zxcvbn from 'zxcvbn';
 import Gallery from "../../components/gallery";
 import { IError, ISuccess } from "../../interfaces";
 import { isLoggedIn } from "../../recoil/SetupRecoil";
@@ -12,6 +13,7 @@ interface IBaseFormValues {
   username: string;
   email: string;
   password: string;
+  conscent: boolean;
 }
 
 export default function Page(): JSX.Element {
@@ -21,15 +23,27 @@ export default function Page(): JSX.Element {
 
   const [error, setError] = useState("");
 
-  function validateForm({ username, email, password }: IBaseFormValues) {
+  function validateForm({ username, email, password, conscent }: IBaseFormValues) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
     if (!username || !email || !password) {
       setError("Veuillez remplir tous les champs.");
       setDisableRegister(true);
       return false;
     } else if (!emailRegex.test(email)) {
       setError("Adresse email invalide.");
+      setDisableRegister(true);
+      return false;
+    } else if (username.length > 20) {
+      setError("Nom d'utilisateur invalide.");
+      setDisableRegister(true);
+      return false;
+    } else if (zxcvbn(password).score < 3) {
+      setError("Mot de passe invalide.");
+      setDisableRegister(true);
+      return false;
+    } else if (!conscent) {
+      setError("Veuillez accepter les conditions d'utilisation.");
       setDisableRegister(true);
       return false;
     }
@@ -49,6 +63,7 @@ export default function Page(): JSX.Element {
         username: event.currentTarget.username.value,
         email: event.currentTarget.email.value,
         password: event.currentTarget.password.value,
+        conscent: event.currentTarget.conscent.checked,
       })
     ) {
       const response = await fetch("http://localhost:5000/api/auth/signup", {
@@ -101,10 +116,18 @@ export default function Page(): JSX.Element {
             placeholder="Mot de passe"
             onChange={handleInputChange}
           />
-          <label className="text-sm font-normal w-11/12 text-center">
-            En vous enregistrant, vous acceptez les <a className="font-semibold">Conditions d'utilisations</a> et{" "}
-            <a className="font-semibold">notre Politique de confidentialité</a>
-          </label>
+          <div className="flex flex-row">
+            <input
+              type="checkbox"
+              name="conscent"
+              onChange={handleInputChange}
+            />
+            <label htmlFor="terms" className="text-sm font-normal w-11/12 text-center">
+              En vous enregistrant, vous acceptez les{" "}
+              <a className="font-semibold">Conditions d'utilisations</a> et{" "}
+              <a className="font-semibold">notre Politique de confidentialité</a>
+            </label>
+          </div>
           <div className="relative flex justify-center">
             {error && <label className="absolute top-2 text-sm font-normal text-red-500">{error}</label>}
             <button type="submit" className="register-button mt-10" disabled={disableRegister} name="register">

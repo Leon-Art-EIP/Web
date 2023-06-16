@@ -51,5 +51,47 @@ describe('registerPageMissingFields.cy.ts', () => {
       find('Adresse email invalide.');
     });
   });
+
+  it('should not register when password is too short', () => {
+    start('/register');
+    cy.get('input[name="username"]').type('myusername');
+    cy.get('input[name="email"]').type('example@example.com');
+    cy.get('input[name="password"]').type('short');
+    cy.get('button[name="register"]').click().then(() => {
+      find('Mot de passe invalide.');
+    });
+  });
+  
+  it('should not register when password is too long', () => {
+    start('/register');
+    cy.get('input[name="username"]').type('myusername');
+    cy.get('input[name="email"]').type('example@example.com');
+    let longPassword = 'a'.repeat(41);
+    cy.get('input[name="password"]').type(longPassword);
+    cy.get('button[name="register"]').click().then(() => {
+      find('Mot de passe invalide.');
+    });
+  });
+  
+  it('should not register when username is too long', () => {
+    start('/register');
+    let longUsername = 'a'.repeat(21);
+    cy.get('input[name="username"]').type(longUsername);
+    cy.get('input[name="email"]').type('example@example.com');
+    cy.get('input[name="password"]').type('password123');
+    cy.get('button[name="register"]').click().then(() => {
+      find('Nom d\'utilisateur invalide.');
+    });
+  });
+  
+  it('should not register when the terms of use are not accepted', () => {
+    start('/register');
+    cy.get('input[name="username"]').type('myusername');
+    cy.get('input[name="email"]').type('example@example.com');
+    cy.get('input[name="password"]').type('password123');
+    cy.get('button[name="register"]').click().then(() => {
+      find('Veuillez accepter les conditions d\'utilisation.');
+    });
+  });
 });
 
