@@ -25,6 +25,8 @@ pipeline{
             }
         }
       steps {
+        sh "rm -rf node-modules/*"
+        sh "npm cache clean --force"
         sh "npm install"
         sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
         sh 'sudo apt-get update'
