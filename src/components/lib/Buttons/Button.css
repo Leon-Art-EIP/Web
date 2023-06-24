@@ -1,0 +1,37 @@
+.button {
+    border-radius: 18px;
+    border-width: 0;
+    padding: 12px 44px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-danger {
+    background-color: #E03915;
+    color: #ffffff;
+}
+
+.button-danger:hover {
+    background-color: darken(#E03915, 10%);
+}
+
+.button-success {
+    background-color: #EEEEEE;
+    color: #2D142C;
+}
+
+.button-success:hover {
+    background-color: darken(#EEEEEE, 10%);
+}
+
+.button-info {
+    background-color: #2D142C;
+    color: #ffffff;
+}
+
+.button-info:hover {
+    background-color: darken(#2D142C, 10%);
+}

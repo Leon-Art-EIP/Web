@@ -1,12 +1,15 @@
 import React from 'react';
+import './Button.css';
 
-interface ButtonProps {
+export interface ButtonProps {
     onClick: () => void;
     children: React.ReactNode;
+    color?: 'danger' | 'success' | 'info';
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, children }) => {
-    return <button onClick={onClick}>{children}</button>;
+const Button: React.FC<ButtonProps> = ({ onClick, children, color }) => {
+    const className = color ? `button button-${color}` : 'button';
+    return <button className={className} onClick={onClick}>{children}</button>;
 };
 
 export default Button;
