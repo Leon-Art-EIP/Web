@@ -3,7 +3,10 @@ pipeline{
   agent any
   
   triggers { githubPush() }
-  tools {nodejs "NodeJS"}
+  tools {
+    nodejs "NodeJS"
+    dockerTool "Docker"
+  }
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the script path that you want to execute")
   }
