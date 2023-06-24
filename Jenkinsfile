@@ -13,11 +13,6 @@ pipeline{
   }
   
   stages{
-    stage('Build') {
-      steps {
-        echo "Build step is empty."
-      }
-    }
     stage("Install") {
         when { 
             not { 
@@ -43,16 +38,6 @@ pipeline{
         sh 'nohup npm start &'
       }
     }
-    stage('Building'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        echo "Building..."
-      }
-    }
     stage('Testing'){
         when { 
             not { 
@@ -60,7 +45,19 @@ pipeline{
             }
         }
       steps{
-        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
+        sh "npm yarn test"
+      }
+    }
+    stage('Push to DockerHUb')
+    {
+      when { 
+        branch 'dev'
+      }
+      steps{
+        echo "Pushing to DockerHub..."
+        sh "docker build -t ${DOCKER_USERNAME}/${DOCKER_REPO_DEV_FRONT}:${BUILD_NUMBER} ."
+        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+        sh "docker push ${DOCKER_USERNAME}/${DOCKER_REPO_DEV_FRONT}:${BUILD_NUMBER}"
       }
     }
   }
