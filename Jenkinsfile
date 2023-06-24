@@ -13,37 +13,37 @@ pipeline{
   }
   
   stages{
-    stage("Install") {
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps {
-        sh "npm install"
-      }
-    }
-    stage('Starting Server'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        echo "Starting Server..."
-        sh 'nohup npm start &'
-      }
-    }
-    stage('Testing'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        sh "npm yarn test"
-      }
-    }
+    // stage("Install") {
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps {
+    //     sh "npm install"
+    //   }
+    // }
+    // stage('Starting Server'){
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps{
+    //     echo "Starting Server..."
+    //     sh 'nohup npm start &'
+    //   }
+    // }
+    // stage('Testing'){
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps{
+    //     sh "npm yarn test"
+    //   }
+    // }
     stage('Push to DockerHUb')
     {
       when { 
