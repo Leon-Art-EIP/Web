@@ -1,5 +1,5 @@
 # Utiliser une image Node.js comme base
-FROM node:14-alpine
+FROM node:20-alpine3.17
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -8,16 +8,14 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installer les dépendances
-RUN npm install
+RUN yarn install
 
 # Copier tous les fichiers du projet
 COPY . .
 
-# Compiler le projet
-RUN npm run build
-
+RUN yarn build
 # Exposer le port 3000
 EXPOSE 3000
 
 # Démarrer l'application
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

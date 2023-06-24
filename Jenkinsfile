@@ -3,7 +3,10 @@ pipeline{
   agent any
   
   triggers { githubPush() }
-  tools {nodejs "NodeJS"}
+  tools {
+    nodejs "NodeJS"
+    dockerTool "Docker"
+  }
   parameters{
     string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the script path that you want to execute")
   }
@@ -13,54 +16,47 @@ pipeline{
   }
   
   stages{
-    stage('Build') {
-      steps {
-        echo "Build step is empty."
+    // stage("Install") {
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps {
+    //     sh "npm install"
+    //   }
+    // }
+    // stage('Starting Server'){
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps{
+    //     echo "Starting Server..."
+    //     sh 'nohup npm start &'
+    //   }
+    // }
+    // stage('Testing'){
+    //     when { 
+    //         not { 
+    //             branch 'gh-pages' 
+    //         }
+    //     }
+    //   steps{
+    //     sh "npm yarn test"
+    //   }
+    // }
+    stage('Push to DockerHUb')
+    {
+      when { 
+        branch 'dev'
       }
-    }
-    stage("Install") {
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps {
-        sh "rm -rf node-modules/*"
-        sh "npm cache clean --force"
-        sh "npm install"
-        sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
-        sh 'sudo apt-get update'
-      }
-    }
-    stage('Starting Server'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
       steps{
-        echo "Starting Server..."
-        sh 'nohup npm start &'
-      }
-    }
-    stage('Building'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        echo "Building..."
-      }
-    }
-    stage('Testing'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
+        echo "Pushing to DockerHub..."
+        sh "docker build -t ${DOCKER_USERNAME}/${DOCKER_REPO_DEV_FRONT}:${BUILD_NUMBER} ."
+        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+        sh "docker push ${DOCKER_USERNAME}/${DOCKER_REPO_DEV_FRONT}:${BUILD_NUMBER}"
       }
     }
   }
