@@ -20,7 +20,7 @@ pipeline{
             }
         }
       steps {
-        sh "yarn install"
+        sh "npm install"
       }
     }
     stage('Starting Server'){
