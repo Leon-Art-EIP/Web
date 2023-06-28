@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Badge, { BadgeProps } from '../components/lib/Badge/Badge';
+import Badge, { BadgeProps } from './Badge';
 
 export default {
   title: 'Components/Badge',
