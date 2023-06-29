@@ -1,73 +1,57 @@
 pipeline{
-  
-  agent any
-  
-  triggers { githubPush() }
-  tools {nodejs "NodeJS"}
-  parameters{
-    string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the script path that you want to execute")
-  }
-  
-  options{
-    ansiColor('xterm')
-  }
-  
-  stages{
-    stage('Build') {
-      steps {
-        echo "Build step is empty."
-      }
+    agent any
+    
+    triggers { githubPush() }
+
+    tools {nodejs "NodeJS"}
+
+    options{
+        ansiColor('xterm')
     }
-    stage("Install") {
-        when { 
-            not { 
-                branch 'gh-pages' 
+    
+    stages {
+        stage("Install") {
+            steps {
+                sh "yarn install"
             }
         }
-      steps {
-        sh "rm -rf node-modules/*"
-        sh "npm cache clean --force"
-        sh "npm install"
-        sh "npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator"
-        sh 'sudo apt-get update'
-      }
-    }
-    stage('Starting Server'){
-        when { 
-            not { 
-                branch 'gh-pages' 
+        stage('Testing'){
+            steps{
+                script {
+                    try {
+                        sh 'yarn run coverage | tee tests.log'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    }
+                }
             }
         }
-      steps{
-        echo "Starting Server..."
-        sh 'nohup npm start &'
-      }
     }
-    stage('Building'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        echo "Building..."
-      }
-    }
-    stage('Testing'){
-        when { 
-            not { 
-                branch 'gh-pages' 
-            }
-        }
-      steps{
-        sh "npx cypress run --headless --spec ${SPEC} --reporter mochawesome --reporter-options reportDir=cypress,overwrite=false,html=true"
-      }
-    }
-  }
   
-  post{
-    always{
-      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+    post {
+        always {
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+            script {
+                def logContent = readFile('tests.log').trim()
+                def branchName = env.BRANCH_NAME
+                def userName = env.CHANGE_AUTHOR
+                def buildNumber = env.BUILD_NUMBER
+
+                discordSend(
+                    webhookURL: "https://discord.com/api/webhooks/1123843395526348801/gx5ktVsVPEtc9kU9VQNn1SsK_e_g0Ad1stTgYEHHsBD1q34T4AC8F2dtMQNBi-N5nZBF",
+                    title: "${env.JOB_NAME}",
+                    description: """
+                        Branch: ${branchName}
+                        User: ${userName}
+                        Log Content:
+                        ${logContent}
+                    """,
+                    footer: "Build Number: ${buildNumber}",
+                    result: currentBuild.currentResult
+                )
+            }
+        }
     }
-  }
 }
