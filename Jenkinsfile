@@ -32,8 +32,6 @@ pipeline{
   
     post {
         always {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-
             script {
                 def logContent = readFile('tests.log').trim()
                 def branchName = env.BRANCH_NAME
