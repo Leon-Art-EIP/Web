@@ -31,7 +31,6 @@ pipeline{
                 }
             }
         }
-    }
     stage('Push to DockerHUb')
     {
       when { 
@@ -46,6 +45,7 @@ pipeline{
         sh "docker push ${DOCKER_USERNAME}/${DOCKER_REPO_DEV_FRONT}:${BUILD_NUMBER}"
       }
     }
+  }
   
   post {
         always {
