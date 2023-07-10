@@ -5,6 +5,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundColor: ['focus'],
       colors: {
         "primaryRed": "#e03915",
         "primaryRedHover": "#e03a15d6",
